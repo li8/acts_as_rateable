@@ -9,7 +9,7 @@ module ActiveRecord
 			  def <<( rate )
 			      r = Rating.new
 			      r.rate = rate
-			      r.rateable = proxy_owner
+			      r.rateable = proxy_association.owner 
 			      r.user_id = rate.user_id
             r.free_text = rate.free_text
             r.rater_name = rate.rater_name
@@ -39,19 +39,20 @@ module ActiveRecord
         # Rates the object by a given score. A user object can be passed to the method.
         # Additionally a rater name and free text can be passed.
         #
-        # The passed in user object must respond to methods 'login' and 'id', otherwise an
+        #add email as it is unique to each user
+        # The passed in user object must respond to methods 'email' and 'id', otherwise an
         # exception is raised.
         #
-        # todo refactor the 'id' & 'login' method names to the acts_as_rateable options hash and make it configurable
+        # todo refactor the 'id' & 'email' method names to the acts_as_rateable options hash and make it configurable
         #
 				def rate_it( score, user, free_text = "" )
 					return unless score
 					rate = Rate.find_or_create_by_score( score.to_i )
           raise "User must respond to 'id' in order to set the user ID!" unless user.respond_to? :id
-          raise "User must respond to 'login' in order to set the rater name!" unless user.respond_to? :login
+          raise "User must respond to 'email' in order to set the rater name!" unless user.respond_to? :email
           rate.user_id = user.id
           rate.free_text = free_text
-          rate.rater_name = user.login
+          rate.rater_name = user.email
 					rates << rate
 				end
 
