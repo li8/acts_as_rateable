@@ -11,7 +11,7 @@ the user's rating description or comment.
 
 You can easily install gem by adding this line into your Gemfile:
 
-  gem "acts_as_rateable", :git => "git://github.com/anton-zaytsev/acts_as_rateable.git"
+  gem "acts_as_rateable", :git => "git://github.com/li8/acts_as_rateable.git"
 
 After you install Acts As Rateable and add it to your Gemfile, you need to run the generator:
 
